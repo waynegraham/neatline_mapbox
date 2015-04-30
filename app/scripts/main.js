@@ -1,3 +1,5 @@
+/* global ZeroClipboard */
+
 var nl = [
 '                                    .   oooo   o8o                       ',
 '                                  .o8   `888   `"\'                       ',
@@ -11,70 +13,57 @@ var nl = [
 console.log(nl);
 
 $(document).ready(function() {
+  'use strict';
 
+  // copy-n-paste from ZeroClipBoard
   var client = new ZeroClipboard($('#copy-button'));
-  client.on("ready", function(readyEvent) {
-    client.on("aftercopy", function(event) {
+  client.on('ready', function() {
+    client.on('aftercopy', function(event) {
       //event.target.style.display = "none";
-      console.log("copied text to clipboard" + event.data["text/plain"]);
+      console.log('copied text to clipboard' + event.data['text/plain']);
     });
   });
 
+  // download the json string
   $('#download-button').click(function(event) {
     console.log(event);
-
-    var val = $('input:text').val();
-
-    var nl_mapbox = {
-      "Mapbox (Neatline)": [
-        {
-          title: "foobar",
-          id: val,
-          properties: {
-            urls: [
-              "http://a.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png",
-              "http://b.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png",
-              "http://c.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png",
-              "http://d.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png"
-            ]
-          }
-        }
-      ]
-    };
-
-
-    this.href = "data:text/plain;charset=UTF-8," + JSON.stringify(nl_mapbox);
-
-    //this.href = 'data:text/plain;charset=UTF-8,' + $('input:text').val();
+    this.href = 'data:text/plain;charset=UTF-8,' + makeJson();
   });
 
-
-
-
-  $('form').submit(function(event, form) {
+  // generate json to text area
+  $('form').submit(function(event) {
     event.preventDefault();
-    var val = $('input:text').val();
+    $('#json-data').val(makeJson());
+  });
 
-    var nl_mapbox = {
-      "Mapbox (Neatline)": [
+
+  /**
+   * TODO: make this a mustache (or whatever) template
+   */
+  function makeJson() {
+
+    var title = $('input#map-title').val();
+    var id    = $('input#mapboxId').val();
+    var user  = $('input#mapbox-user').val();
+
+    var nlMapbox = {
+      'Mapbox (Neatline)': [
         {
-          title: "foobar",
-          id: val,
+          title: title,
+          id: id,
           properties: {
             urls: [
-              "http://a.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png",
-              "http://b.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png",
-              "http://c.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png",
-              "http://d.tiles.mapbox.com/v3/dclure.hc7a4mo9/${z}/${x}/${y}.png"
+              'http://a.tiles.mapbox.com/v3/' + user + '/${z}/${x}/${y}.png',
+              'http://b.tiles.mapbox.com/v3/' + user + '/${z}/${x}/${y}.png',
+              'http://c.tiles.mapbox.com/v3/' + user + '/${z}/${x}/${y}.png',
+              'http://d.tiles.mapbox.com/v3/' + user + '/${z}/${x}/${y}.png',
             ]
           }
         }
       ]
     };
 
-    $('#json-data').val(JSON.stringify(nl_mapbox));
+    return JSON.stringify(nlMapbox);
+  }
 
-
-    //console.log(JSON.stringify(nl_mapbox));
-  });
 });

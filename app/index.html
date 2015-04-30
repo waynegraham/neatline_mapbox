@@ -36,13 +36,24 @@
 
       <div class="jumbotron">
         <h1>'Allo, 'Allo!</h1>
-        <p class="lead">Paste comma seperated Mapbox IDs to generate a Neatline Configuration file.</p>
+        <p class="lead">Fill out the form with Mapbox credentials to generate a Neatline Configuration file.</p>
 
-        <form>
+        <form id="neatline">
+          <div class="form-group">
+            <label for="title">Map Title</label>
+            <input value="test title" type="text" class="form-control" id="map-title" placeholder="Mapbox Title"/>
+          </div>
+
           <div class="form-group">
             <label for="mapboxId">Mapbox ID</label>
-            <input type="text" class="form-control" id="mapboxId" placeholder="Mapbox ID"/>
+            <input value="test.id" type="text" class="form-control" id="mapboxId" placeholder="Mapbox ID"/>
           </div>
+
+          <div class="form-group">
+            <label for="title">Mapbox User</label>
+            <input value="user.id" type="text" class="form-control" id="mapbox-user" placeholder="Mapbox User"/>
+          </div>
+
           <button class="btn btn-lg btn-success">Generate <span class="glyphicon glyphicon-ok"></span></button>
         </form>
 
