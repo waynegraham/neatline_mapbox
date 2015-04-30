@@ -1,0 +1,9 @@
+{
+  "name": "neatline-mapbox",
+  "private": true,
+  "dependencies": {
+    "bootstrap-sass-official": "~3.2.0",
+    "modernizr": "~2.8.2",
+    "zeroclipboard": "~2.2.0"
+  }
+}
