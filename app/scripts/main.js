@@ -27,7 +27,7 @@ $(document).ready(function() {
   // download the json string
   $('#download-button').click(function(event) {
     console.log(event);
-    this.href = 'data:text/plain;charset=UTF-8,' + makeJson();
+    this.href = 'data:text/json;charset=utf-8,' + makeJson();
   });
 
   // generate json to text area
